@@ -17,12 +17,12 @@ help me simulate cards
     - the value also has a string datatype, "Queen", "King" etc. 
     - and a string datatype "Q", "K", "A" , "2" etc. 
 - Print methods : "toString('short')" ,'long'
-- is face up or face down / flip
-- is compared to another card
+- Is face up or face down / flip
+- Is compared to another card
     - higher
     - lower
     - equal
-- is same suite
+- Is same suite
 
 ### Stacks
 - Generic list of cards, but has a top and bottom.
