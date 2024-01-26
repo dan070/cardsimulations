@@ -1,3 +1,5 @@
+from itertools import product
+
 
 class Card:
     """
@@ -154,4 +156,13 @@ class Card:
 
 class Deck:
     def __init__(self):
-        pass
+        self.decklist = list()
+
+    def add_traditional_52cards(self) -> None:
+        suites = ['c','d','h','s']
+        ranks = range(1, 14)
+
+        list_to_append = [Card(rank, suit) for suit, rank in product(suites, ranks)]
+        self.decklist.append(list_to_append)
+
+    
