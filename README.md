@@ -11,12 +11,12 @@ help me simulate cards
 ### Cards
 - what suite 
     - datatype string, for ease of use. "spades" "hearts"
-    - return a ascii symbol as well. 
+    - return a ascii symbol as well. There are 4 special ascii that will print the symbol.
 - what value
     - datatype integer, for the value. Typically King = 13. But Ace could be = 1 or 14. 
     - the value also has a string datatype, "Queen", "King" etc. 
     - and a string datatype "Q", "K", "A" , "2" etc. 
-    - 
+- Print methods : "toString('short')" ,'long'
 - is face up or face down / flip
 - is compared to another card
     - higher
