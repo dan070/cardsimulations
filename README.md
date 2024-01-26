@@ -9,8 +9,14 @@ help me simulate cards
 - Special initialization can be done. With ace =1 or ace = 14. No court cards. All court cards = 10. etc.
 
 ### Cards
-- what suite
+- what suite 
+    - datatype string, for ease of use. "spades" "hearts"
+    - return a ascii symbol as well. 
 - what value
+    - datatype integer, for the value. Typically King = 13. But Ace could be = 1 or 14. 
+    - the value also has a string datatype, "Queen", "King" etc. 
+    - and a string datatype "Q", "K", "A" , "2" etc. 
+    - 
 - is face up or face down / flip
 - is compared to another card
     - higher
