@@ -1,5 +1,5 @@
 from itertools import product
-
+from random import shuffle
 
 class Card:
     """
@@ -134,7 +134,7 @@ class Card:
         None: Nothing is returned.
         """
 
-        self.face_up = rank
+        self.face_up = value
     # Comparison
     def is_higher_than(self, c:'Card') -> bool:
         return c.rank < self.rank
@@ -163,6 +163,17 @@ class Deck:
         ranks = range(1, 14)
 
         list_to_append = [Card(rank, suit) for suit, rank in product(suites, ranks)]
-        self.decklist.append(list_to_append)
+        self.decklist.extend(list_to_append)
 
-    
+    def shuffle(self) -> None:
+        shuffle(self.decklist)
+        return None
+
+    def take_card(self, skip_cards:int = 0 ) -> Card:
+        return self.decklist.pop(skip_cards)
+
+    def put_card(self, c:Card, position:int = 0) -> None:
+        return self.decklist.insert(position, c)
+
+    def card_count(self) -> int:
+        return len(self.decklist)
