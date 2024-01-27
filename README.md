@@ -27,10 +27,16 @@ help me simulate cards
 ### Stacks
 - Generic list of cards, but has a top and bottom.
 - Is constituted by 0..m cards.
-- check card - returns a view-only copy of the card.
+Functions : 
+- check if deck contains a certain card, true or false
+- give the placement for a certain card, integer. None if missing.
 - take card - takes the card off the stack.
-    - Take top card, n:th card from top. 
-    - Take bottom card. nth card from bottom.
+    - Take top card
+    - Take bottom card
+    - Take n:th card
+- put card - puts a card back on the stack
+    - put on top, or bottom
+    - put in randomly
 - Stack shuffle / randomize
 - Stack can be empty, and this is not an error. Each function returns empty object.
 
