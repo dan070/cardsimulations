@@ -4,10 +4,16 @@ from random import shuffle
 class Card:
     """
     Represents a playing card with a rank and a suit.
+    Cards can be compared using ==, <, and > etc. (see options for extended behaviour)
+    The ** operator returns True if 2 cards have same suite.
 
     Attributes:
         rank (str): The rank of the card ('Ace', '2', ..., 'King').
         suit (str): The suit of the card ('Hearts', 'Diamonds', 'Clubs', 'Spades').
+    Options:
+        "compare_within_suite_only" : True = any comparison >, <, == etc is applied inside
+        the same suite as the calling card. A mismatch in suites returns None.
+        Defaults to False.
     """
 
     def __init__(self, rank: int, suite: str) -> None:
@@ -26,6 +32,7 @@ class Card:
         self.rank_short = ''
         self.rank_long = ''
         self.face_up = False # Card starts as face down.
+        self.compare_within_suite_only = False # Starts with comparing any 2 suites.
         match rank:
             case 1: 
                 self.rank_long = 'Ace'
@@ -97,7 +104,8 @@ class Card:
         Return string representation of card for printing.
 
         Parameters:
-            variant (str): Which variation to return. s for short, l for long, v for very long.
+            variant (str): Which variation to return. 
+                           's' for short, 'l' for long, 'v' for very long.
 
         Returns:
         str: Either 2 characters with ascii-character for suite, and 1 character for rank.
@@ -135,26 +143,51 @@ class Card:
         """
 
         self.face_up = value
-    # Comparison
-    def is_higher_than(self, c:'Card') -> bool:
-        return c.rank < self.rank
-    def is_lower_than(self, c:'Card') -> bool:
-        return c.rank > self.rank
-    def is_equal_to(self, c:'Card') -> bool:
-        return c.rank == self.rank
-    def is_same_suit(self, c:'Card') -> bool:
-        return self.suite_short == c.suite_short
+
     # Comparison overloaded operators
-    def __gt__(self, c:'Card') -> bool:
-        return self.is_higher_than(c)
+    # Short circuit evaluation depends on within-suite comparison of ranks. 
     def __lt__(self, c:'Card') -> bool:
-        return self.is_lower_than(c)
+        if self.compare_within_suite_only and (not self ** c) : return None 
+        return c.rank > self.rank
+    def __le__(self, c:'Card') -> bool:
+        if self.compare_within_suite_only and (not self ** c) : return None 
+        return c.rank >= self.rank    
     def __eq__(self, c:'Card') -> bool:
-        return self.is_equal_to(c)
+        if self.compare_within_suite_only and (not self ** c) : return None 
+        return c.rank == self.rank
+    def __gt__(self, c:'Card') -> bool:
+        if self.compare_within_suite_only and (not self ** c) : return None 
+        return c.rank < self.rank    
+    def __ge__(self, c:'Card') -> bool:
+        if self.compare_within_suite_only and (not self ** c) : return None 
+        return c.rank <= self.rank        
     def __pow__(self, c:'Card') -> bool:
-        return self.is_same_suit(c)
+        return self.suite_short == c.suite_short
+    
+    # Sub is a comparison that returns 0 if the cards are the same.
+    def __sub__(self, c:'Card') -> int:
+        if self.suite_short == c.suite_short and self.rank == c.rank :
+            return 0
+        else:
+            return 1
+
+
 
 class Deck:
+    """
+    Represents a deck or hand of Cards.
+    You can take, put a card, shuffle the deck etc.
+
+    The deck can fill itself with cards, like 52 cards.
+    Under the hood this is a standard python list.
+
+    Attributes:
+        No attributes for creating a deck.
+    
+    
+
+    """
+
     def __init__(self):
         self.decklist = list()
 
@@ -163,7 +196,7 @@ class Deck:
         ranks = range(1, 14)
 
         list_to_append = [Card(rank, suit) for suit, rank in product(suites, ranks)]
-        self.decklist.extend(list_to_append)
+        self.decklist.extend(list_to_append) # Extend rather than append bec each item must be inserted individually.
 
     def shuffle(self) -> None:
         shuffle(self.decklist)
@@ -177,3 +210,21 @@ class Deck:
 
     def card_count(self) -> int:
         return len(self.decklist)
+
+    def find_card(self, c:Card) -> int:
+        """
+        Find the position of a card in deck, as if you saw all the faces.
+        The first match is returned, if there are more matches.
+        None returned if no match found.
+
+        Parameters:
+        c (Card) : what card to search for.
+
+        Returns:
+        None: Nothing is returned.
+        """
+        # We loop to find the first match, as fast as possible
+        for index, d in enumerate(self.decklist):
+            if (d - c) == 0 : return index
+        # Return None if we didn't match any
+        return None 
