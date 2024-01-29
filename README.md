@@ -18,18 +18,18 @@ help me simulate cards
     - and a string datatype "Q", "K", "A" , "2" etc. 
 - Print methods : "toString('short')" ,'long'
 - Is face up or face down / flip
-- Is compared to another card
+- Is compared to another card (with a flip option to compare only within same suite)
     - higher
     - lower
     - equal
 - Is same suite
 
-### Stacks
+### Decks
 - Generic list of cards, but has a top and bottom.
 - Is constituted by 0..m cards.
 Functions : 
 - check if deck contains a certain card, true or false
-- give the placement for a certain card, integer. None if missing.
+- find card in stack as if you see all the cards. Return position of a certain card, integer. None if missing.
 - take card - takes the card off the stack.
     - Take top card
     - Take bottom card
