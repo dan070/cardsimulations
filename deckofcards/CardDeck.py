@@ -123,6 +123,9 @@ class Card:
     
     def __str__(self):
         return f"{self.to_string()}"
+    def __repr__(self):
+        return f"{self.to_string()}"
+    
     def is_face_up(self) -> bool:
         """
         If card is face up or not.
@@ -203,7 +206,11 @@ class Deck:
         return None
 
     def take_card(self, skip_cards:int = 0 ) -> Card:
-        return self.decklist.pop(skip_cards)
+        try:
+            ret = self.decklist.pop(skip_cards)
+        except Exception as e:
+            return None # If we pop something out of bonds => None        
+        return ret
 
     def put_card(self, c:Card, position:int = 0) -> None:
         return self.decklist.insert(position, c)
