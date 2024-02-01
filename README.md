@@ -39,7 +39,7 @@ Functions :
     - put in randomly
 - Stack shuffle / randomize
 - Stack can be empty, and this is not an error. Each function returns empty object.
-
+- Stacks are reversed, so that bottom card becomes top card.
 
 ### Hands
 - Hands are also stacks, but with certain logic to facilitate game play. 
