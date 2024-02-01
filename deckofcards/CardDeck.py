@@ -216,6 +216,15 @@ class Deck:
         return self.decklist.insert(position, c)
 
     def card_count(self) -> int:
+        """
+        Count the number of cards in deck.
+
+        Parameters: No parameters.
+
+        Returns:
+            int: number of cards in this deck
+        """
+
         return len(self.decklist)
 
     def find_card(self, c:Card) -> int:
